@@ -18,29 +18,37 @@ def coordinateToFormat(x, y):
 
 def createMap(stores):
     # 위도, 경도
-    lat, lon = stores.iloc[2]['lat'], stores.iloc[2]['lon']
+    lat, lon = stores[2]['lat'], stores[2]['lon']
 
     map = folium.Map([lat, lon], zoom_start = 16)
-    randIdx = set()
-
     maxIdx = 4
-    # 랜덤 인덱스
-    while len(randIdx) < maxIdx:
-        randIdx.add(random.randint(0, len(stores)-1))
 
-    randIdx = list(randIdx)
     # 마커 아이콘
     for i in range(maxIdx):
-        idx = randIdx[i]
         
-        storeName = stores.iloc[idx]['사업장명']
-        location = stores.iloc[idx]['도로명전체주소']
-        popup = f"<div style='width: 200px'><span style='font-size: 17px'>{storeName}</span><br>{location}</div>"
-        marker = folium.Marker([stores.iloc[idx]['lat'], stores.iloc[i]['lon']],
+        storeName = stores[i]['사업장명']
+        location = stores[i]['도로명전체주소']
+        query = f"{stores[i]['소재지전체주소']} {storeName}"
+        popup = f"<div style='width:300px; text-align: center;'><span style='font-size: 17px'>{storeName}</span><br>{location}<br><a href='https://www.google.com/search?q={query}'>세부 정보</div>"
+        
+        # 업태구분명 아이콘 설정
+        if stores[i]['업태구분명'] == '기타' or stores[i]['업태구분명'] == '커피숍':
+            iconColor = 'red'
+            iconType = 'time'
+        else:
+            iconColor = 'orange'
+            iconType = 'cutlery'
+
+        marker = folium.Marker([stores[i]['lat'], stores[i]['lon']],
                                 popup = popup,
-                                icon = folium.Icon(color = 'blue')
+                                icon = folium.Icon(color=iconColor, icon=iconType)
                             )
         marker.add_to(map)
+
+    # 선으로 마커들 연결
+    points = [[stores[i]['lat'], stores[i]['lon']] for i in range(maxIdx)]
+    folium.PolyLine(points, color="#5faaf5", weight=8, opacity=1).add_to(map)
+
     map.save('map.html')
     print(f"지도 저장에 성공했습니다.")
 
@@ -54,19 +62,72 @@ def openMap():
     # 웹 브라우저를 사용하여 HTML 파일 열기
     webbrowser.open(mapPath)
 
+def createRoutine(stores, bestStoreName):
+    routine = []
+    
+    filteredBreakfast = stores[(stores['업태구분명'] != '기타') & (stores['업태구분명'] != '호프/통닭') & (stores['업태구분명'] != '커피숍')]
+    filteredLunch = stores[(stores['업태구분명'] != '기타') & (stores['업태구분명'] != '호프/통닭') & (stores['업태구분명'] != '커피숍')]
+    filteredEtc = stores[(stores['업태구분명'] == '기타') | (stores['업태구분명'] == '커피숍')]
+    filteredDinner = stores[stores['업태구분명'] != '기타']
+
+    # 맛집이 존재할 경우에는 맛집 중 랜덤 추가, 없으면 전체 음식점 중 랜덤 추가
+
+    ## 아침 식사
+    breakfastBest = filteredBreakfast[filteredBreakfast['사업장명'].isin(bestStoreName['상호명'])]     
+    
+    if breakfastBest.empty:
+        routine.append(filteredBreakfast.iloc[random.randint(0, len(filteredBreakfast)-1)])
+    else:
+        routine.append(breakfastBest.iloc[random.randint(0, len(breakfastBest)-1)])    
+
+    ## 점심 식사
+    lunchBest = filteredLunch[filteredLunch['사업장명'].isin(bestStoreName['상호명'])]     
+    
+    if lunchBest.empty:
+        routine.append(filteredLunch.iloc[random.randint(0, len(filteredLunch)-1)])
+    else:
+        routine.append(lunchBest.iloc[random.randint(0, len(lunchBest)-1)])  
+
+    ## 식후
+    etcBest = filteredEtc[filteredEtc['사업장명'].isin(bestStoreName['상호명'])]     
+    
+    if etcBest.empty:
+        routine.append(filteredEtc.iloc[random.randint(0, len(filteredEtc)-1)])
+    else:
+        routine.append(etcBest.iloc[random.randint(0, len(etcBest)-1)])  
+        
+    ## 저녁 식사
+    dinnerBest = filteredDinner[filteredDinner['사업장명'].isin(bestStoreName['상호명'])]     
+    
+    if dinnerBest.empty:
+        routine.append(filteredDinner.iloc[random.randint(0, len(filteredDinner)-1)])
+    else:
+        routine.append(dinnerBest.iloc[random.randint(0, len(dinnerBest)-1)])  
+
+
+    print(f"아침: {routine[0]['사업장명']} , {routine[0]['업태구분명']}, {routine[0]['lat']}, {routine[0]['lon']}")
+    print(f"점심: {routine[1]['사업장명']} , {routine[1]['업태구분명']}")
+    print(f"식후: {routine[2]['사업장명']} , {routine[2]['업태구분명']}")
+    print(f"저녁: {routine[3]['사업장명']} , {routine[3]['업태구분명']}")
+    
+    return routine
+
+    
 
 bakeryFilePath='./CSV/bakery.csv'
 recessFilePath='./CSV/recess.csv'
 normalFilePath='./CSV/normal.csv'
+bestStoreNamePath='./CSV/bestStoreName.csv'
 
 # 필요한 열들을 리스트로 묶음
-initColumns = ['소재지전체주소', '도로명전체주소', '도로명우편번호', '사업장명', '좌표정보(x)', '좌표정보(y)']
+initColumns = ['소재지전체주소', '도로명전체주소', '도로명우편번호', '사업장명', '업태구분명', '좌표정보(x)', '좌표정보(y)']
 columns = ['소재지전체주소', '도로명전체주소', '도로명우편번호', '사업장명', 'lon', 'lat']
 
 # 음식점 데이터 로드
 bakery = pd.read_csv(bakeryFilePath, encoding="CP949", usecols=initColumns, dtype={'좌표정보(x)': float, '좌표정보(y)': float})
 recess = pd.read_csv(recessFilePath, encoding="CP949", usecols=initColumns, dtype={'좌표정보(x)': float, '좌표정보(y)': float})
 normal = pd.read_csv(normalFilePath, encoding="CP949", usecols=initColumns, dtype={'좌표정보(x)': float, '좌표정보(y)': float})
+bestStoreName = pd.read_csv(bestStoreNamePath, usecols=['상호명'])
 
 
 # 위 3개의 데이터를 합침
@@ -88,14 +149,15 @@ searchData = totalData.loc[
                         totalData['도로명전체주소'].str.contains(inuptAddress) |
                         totalData['사업장명'].str.contains(inuptAddress)
                     ] 
-stores = searchData[['도로명전체주소','사업장명', 'lon', 'lat']]
-
+stores = searchData[['도로명전체주소','사업장명', 'lon', 'lat', '업태구분명', '소재지전체주소']]
 
 # 요청 보내기
 print("검색된 가게 목록: ", len(stores))
 
+# 아침 - 점심 - 식후 - 저녁 - 랜덤하게 영화관 등의 장소
+routine = createRoutine(stores, bestStoreName)
 # 지도 생성
-createMap(stores)
+createMap(routine)
 
 
 # 만들어진 지도를 실행
