@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
     <title>하루 음식점 자동 추천</title>
     <style>
+        body{
+            overflow: hidden;
+        }
         .searchContainer {
             display: flex;
             justify-content: center;
@@ -36,11 +40,18 @@
             opacity: 0.5;
             cursor: pointer;
         }
+        .reslutCenter{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+        }
         .resultContainer {
             display: flex;
             align-items: center;
             justify-content: space-around;
             margin: 20px 0;
+            width: 80%;
         }
         .storeImg{
             width: 50px;
@@ -89,26 +100,28 @@
     </div>
     
     {% if result %}
-        <div class="resultContainer">
-            <div class="storeContainer1">
-                <img src="{{ url_for('static', filename='hotel.png') }}" class="storeImg">
-                <span class="storeSpan">{{ result[0]['사업장명'] }}</span>
-            </div>
-            <div class="storeContainer2"> 
-                <img src="{{ url_for('static', filename='restaurant.png') }}" class="storeImg">
-                <span class="storeSpan">{{ result[1]['사업장명'] }}</span>
-            </div>
-            <div class="storeContainer2">
-                <img src="{{ url_for('static', filename='restaurant.png') }}" class="storeImg">
-                <span class="storeSpan">{{ result[2]['사업장명'] }}</span>
-            </div>
-            <div class="storeContainer3">
-                <img src="{{ url_for('static', filename='cafeteria.png') }}" class="storeImg">
-                <span class="storeSpan">{{ result[3]['사업장명'] }}</span>
-            </div>
-            <div class="storeContainer2">
-                <img src="{{ url_for('static', filename='restaurant.png') }}" class="storeImg">
-                <span class="storeSpan">{{ result[4]['사업장명'] }}</span>
+        <div class="reslutCenter">
+            <div class="resultContainer">
+                <div class="storeContainer1" onclick="window.location.href='https:\/\/www.google.com/search?q={query}'">
+                    <img src="{{ url_for('static', filename='hotel.png') }}" class="storeImg">
+                    <span class="storeSpan">{{ result[0]['사업장명'] }}</span>
+                </div>
+                <div class="storeContainer2"> 
+                    <img src="{{ url_for('static', filename='restaurant.png') }}" class="storeImg">
+                    <span class="storeSpan">{{ result[1]['사업장명'] }}</span>
+                </div>
+                <div class="storeContainer2">
+                    <img src="{{ url_for('static', filename='restaurant.png') }}" class="storeImg">
+                    <span class="storeSpan">{{ result[2]['사업장명'] }}</span>
+                </div>
+                <div class="storeContainer3">
+                    <img src="{{ url_for('static', filename='cafeteria.png') }}" class="storeImg">
+                    <span class="storeSpan">{{ result[3]['사업장명'] }}</span>
+                </div>
+                <div class="storeContainer2">
+                    <img src="{{ url_for('static', filename='restaurant.png') }}" class="storeImg">
+                    <span class="storeSpan">{{ result[4]['사업장명'] }}</span>
+                </div>
             </div>
         </div>
         <div class="iFrameContainer">

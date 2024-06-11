@@ -29,7 +29,7 @@ def createMap(stores):
                         <br>
                         {location}
                         <br>
-                        <a href='https://www.google.com/search?q={query}'>세부 정보
+                        <a href='https://www.google.com/search?q={query}' target='_blank'>세부 정보
                     </div>"""
         if stores[i]['업태구분명'] == '기타' or stores[i]['업태구분명'] == '커피숍':
             iconColor = 'orange'
@@ -134,7 +134,7 @@ def index():
         routine = createRoutine(stores, filterAccommodation, bestStoreName)
 
         createMap(routine)
-        
+
         result = routine
     return render_template('index.html', result=result)
 
