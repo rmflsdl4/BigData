@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_a4111fb0fa28ac57a4be17661d2d997d {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_a4111fb0fa28ac57a4be17661d2d997d" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_a4111fb0fa28ac57a4be17661d2d997d = L.map(
+                "map_a4111fb0fa28ac57a4be17661d2d997d",
+                {
+                    center: [37.50394434432403, 127.03509502540386],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 14,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_42b81c8f441ba0be6bcae009d1788541 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors", "detectRetina": false, "maxNativeZoom": 19, "maxZoom": 19, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+        
+    
+            tile_layer_42b81c8f441ba0be6bcae009d1788541.addTo(map_a4111fb0fa28ac57a4be17661d2d997d);
+        
+    
+            var marker_a391678194d2c059395caf584508fb01 = L.marker(
+                [37.50394434432403, 127.03509502540386],
+                {}
+            ).addTo(map_a4111fb0fa28ac57a4be17661d2d997d);
+        
+    
+            var icon_9a7daa2682b223302e28a3e74481d150 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "home", "iconColor": "white", "markerColor": "lightblue", "prefix": "glyphicon"}
+            );
+            marker_a391678194d2c059395caf584508fb01.setIcon(icon_9a7daa2682b223302e28a3e74481d150);
+        
+    
+        var popup_e785ce1f5a590ebad084671e590fec4e = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_0826b967d9687713b834e765e1425711 = $(`<div id="html_0826b967d9687713b834e765e1425711" style="width: 100.0%; height: 100.0%;"><div style='width:300px; text-align: center;'>                         <span style='font-size: 17px'>호텔 세느</span> (nan)                         <br>                         서울특별시 강남구 논현로 533, 호텔 세느 (역삼동)                         <br>                         <a href='https://www.google.com/search?q=서울특별시 강남구 논현로 533, 호텔 세느 (역삼동) 호텔 세느'>세부 정보                     </div></div>`)[0];
+                popup_e785ce1f5a590ebad084671e590fec4e.setContent(html_0826b967d9687713b834e765e1425711);
+            
+        
+
+        marker_a391678194d2c059395caf584508fb01.bindPopup(popup_e785ce1f5a590ebad084671e590fec4e)
+        ;
+
+        
+    
+    
+            var marker_12e3230ffc3c1195fc901afa0954b325 = L.marker(
+                [37.512178044672105, 127.0471371263191],
+                {}
+            ).addTo(map_a4111fb0fa28ac57a4be17661d2d997d);
+        
+    
+            var icon_86e92772fbd5f2704f8a7f6025c37fab = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cutlery", "iconColor": "white", "markerColor": "lightgreen", "prefix": "glyphicon"}
+            );
+            marker_12e3230ffc3c1195fc901afa0954b325.setIcon(icon_86e92772fbd5f2704f8a7f6025c37fab);
+        
+    
+        var popup_22dd475e45206e76882fc7ef452de531 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_8890b3ba502abfbc23b97914de31985e = $(`<div id="html_8890b3ba502abfbc23b97914de31985e" style="width: 100.0%; height: 100.0%;"><div style='width:300px; text-align: center;'>                         <span style='font-size: 17px'>나무</span> (경양식)                         <br>                         서울특별시 강남구 봉은사로63길 12, 1층 (삼성동)                         <br>                         <a href='https://www.google.com/search?q=서울특별시 강남구 봉은사로63길 12, 1층 (삼성동) 나무'>세부 정보                     </div></div>`)[0];
+                popup_22dd475e45206e76882fc7ef452de531.setContent(html_8890b3ba502abfbc23b97914de31985e);
+            
+        
+
+        marker_12e3230ffc3c1195fc901afa0954b325.bindPopup(popup_22dd475e45206e76882fc7ef452de531)
+        ;
+
+        
+    
+    
+            var marker_a1508af9c79163c64789750355739996 = L.marker(
+                [37.52459020417246, 127.0429981583529],
+                {}
+            ).addTo(map_a4111fb0fa28ac57a4be17661d2d997d);
+        
+    
+            var icon_3327c059c7c79028a24ea37ffe0bccb8 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cutlery", "iconColor": "white", "markerColor": "lightgreen", "prefix": "glyphicon"}
+            );
+            marker_a1508af9c79163c64789750355739996.setIcon(icon_3327c059c7c79028a24ea37ffe0bccb8);
+        
+    
+        var popup_616380e30884c88eaf72f0528d34bd5c = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_0d518a236d392d440b5b72bc9f8c66bc = $(`<div id="html_0d518a236d392d440b5b72bc9f8c66bc" style="width: 100.0%; height: 100.0%;"><div style='width:300px; text-align: center;'>                         <span style='font-size: 17px'>플로우</span> (경양식)                         <br>                         서울특별시 강남구 도산대로61길 10, 지하1층 (청담동)                         <br>                         <a href='https://www.google.com/search?q=서울특별시 강남구 도산대로61길 10, 지하1층 (청담동) 플로우'>세부 정보                     </div></div>`)[0];
+                popup_616380e30884c88eaf72f0528d34bd5c.setContent(html_0d518a236d392d440b5b72bc9f8c66bc);
+            
+        
+
+        marker_a1508af9c79163c64789750355739996.bindPopup(popup_616380e30884c88eaf72f0528d34bd5c)
+        ;
+
+        
+    
+    
+            var marker_3b5b8b6a344fc6fee0d7a24ba235af87 = L.marker(
+                [37.510062931276956, 127.05656290894576],
+                {}
+            ).addTo(map_a4111fb0fa28ac57a4be17661d2d997d);
+        
+    
+            var icon_698b6fd05a26339aa40c8c2e5cfde49d = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "time", "iconColor": "white", "markerColor": "orange", "prefix": "glyphicon"}
+            );
+            marker_3b5b8b6a344fc6fee0d7a24ba235af87.setIcon(icon_698b6fd05a26339aa40c8c2e5cfde49d);
+        
+    
+        var popup_a210ecf82e0c341b5b2a52bd71b4ae86 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_9c69da9b737bf2a0996f2aa9b5ed166c = $(`<div id="html_9c69da9b737bf2a0996f2aa9b5ed166c" style="width: 100.0%; height: 100.0%;"><div style='width:300px; text-align: center;'>                         <span style='font-size: 17px'>뮤즈</span> (기타)                         <br>                         서울특별시 강남구 테헤란로83길 41, 일신빌딩 지하1층 (삼성동)                         <br>                         <a href='https://www.google.com/search?q=서울특별시 강남구 테헤란로83길 41, 일신빌딩 지하1층 (삼성동) 뮤즈'>세부 정보                     </div></div>`)[0];
+                popup_a210ecf82e0c341b5b2a52bd71b4ae86.setContent(html_9c69da9b737bf2a0996f2aa9b5ed166c);
+            
+        
+
+        marker_3b5b8b6a344fc6fee0d7a24ba235af87.bindPopup(popup_a210ecf82e0c341b5b2a52bd71b4ae86)
+        ;
+
+        
+    
+    
+            var marker_08a727b1a297103bb47d3ccb7b67c975 = L.marker(
+                [37.496963142658686, 127.0446280944574],
+                {}
+            ).addTo(map_a4111fb0fa28ac57a4be17661d2d997d);
+        
+    
+            var icon_d2a6cc6603e7f689c2d908056ef2a7b4 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cutlery", "iconColor": "white", "markerColor": "lightgreen", "prefix": "glyphicon"}
+            );
+            marker_08a727b1a297103bb47d3ccb7b67c975.setIcon(icon_d2a6cc6603e7f689c2d908056ef2a7b4);
+        
+    
+        var popup_5cafdace16f259d7061f0ec83bcab75e = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_aea861fabb86ce471bf22b808149df6d = $(`<div id="html_aea861fabb86ce471bf22b808149df6d" style="width: 100.0%; height: 100.0%;"><div style='width:300px; text-align: center;'>                         <span style='font-size: 17px'>신단설렁탕</span> (한식)                         <br>                         서울특별시 강남구 언주로71길 5-10, 지상1층 (역삼동)                         <br>                         <a href='https://www.google.com/search?q=서울특별시 강남구 언주로71길 5-10, 지상1층 (역삼동) 신단설렁탕'>세부 정보                     </div></div>`)[0];
+                popup_5cafdace16f259d7061f0ec83bcab75e.setContent(html_aea861fabb86ce471bf22b808149df6d);
+            
+        
+
+        marker_08a727b1a297103bb47d3ccb7b67c975.bindPopup(popup_5cafdace16f259d7061f0ec83bcab75e)
+        ;
+
+        
+    
+    
+            var poly_line_4f9011d0074bc6900a4d3881cb64a597 = L.polyline(
+                [[37.50394434432403, 127.03509502540386], [37.512178044672105, 127.0471371263191], [37.52459020417246, 127.0429981583529], [37.510062931276956, 127.05656290894576], [37.496963142658686, 127.0446280944574]],
+                {"bubblingMouseEvents": true, "color": "#888888", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#888888", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 8}
+            ).addTo(map_a4111fb0fa28ac57a4be17661d2d997d);
+        
+</script>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>하루 음식점 자동 추천</title>
+    <style>
+        .searchContainer {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            width: 100%;
+        }
+        .searchBorder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 30px;
+            width: 80%;
+            border: 1px solid gray;
+            height: 45px;
+        }
+        .searchInput {
+            width: 80%;
+            padding: 15px;
+            border-right: none;
+            border: none;
+            outline: none;
+        }
+        .searchBtn{
+            width: 20%;
+            height: 45px;
+            border: none;
+        }
+        .searchBtn:hover{
+            opacity: 0.5;
+            cursor: pointer;
+        }
+        .resultContainer {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        .storeImg{
+            width: 50px;
+            height: 50px;
+            margin-right: 7px;
+        }
+        .storeSpan{
+            margin-left: 7px;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        .storeContainer1, .storeContainer2, .storeContainer3, .storeContainer4{
+            display: flex;
+            align-items: center;
+            border-radius: 15px;
+            padding: 15px;
+        }
+        .storeContainer1{
+            background-color: #98BCFF;
+        }
+        .storeContainer2{
+            background-color: #C9D99A;
+        }
+        .storeContainer3{
+            background-color: #BA7E3F;
+        }
+        .iFrameContainer{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+        }
+        .iFrame{
+            width: 80%;
+            height: 700px;
+        }
+    </style>
+</head>
+<body>
+    <div class="searchContainer">
+        <form method="post" class="searchBorder">
+            <input type="text" class="searchInput" name="address" placeholder="원하는 지역명을 입력하세요.   예시) 사상구" required>
+            <button type="submit" class="searchBtn">생성하기</button>
+        </form>
+    </div>
+    
+    {% if result %}
+        <div class="resultContainer">
+            <div class="storeContainer1">
+                <img src="{{ url_for('static', filename='hotel.png') }}" class="storeImg">
+                <span class="storeSpan">{{ result[0]['사업장명'] }}</span>
+            </div>
+            <div class="storeContainer2"> 
+                <img src="{{ url_for('static', filename='restaurant.png') }}" class="storeImg">
+                <span class="storeSpan">{{ result[1]['사업장명'] }}</span>
+            </div>
+            <div class="storeContainer2">
+                <img src="{{ url_for('static', filename='restaurant.png') }}" class="storeImg">
+                <span class="storeSpan">{{ result[2]['사업장명'] }}</span>
+            </div>
+            <div class="storeContainer3">
+                <img src="{{ url_for('static', filename='cafeteria.png') }}" class="storeImg">
+                <span class="storeSpan">{{ result[3]['사업장명'] }}</span>
+            </div>
+            <div class="storeContainer2">
+                <img src="{{ url_for('static', filename='restaurant.png') }}" class="storeImg">
+                <span class="storeSpan">{{ result[4]['사업장명'] }}</span>
+            </div>
+        </div>
+        <div class="iFrameContainer">
+            <iframe src="{{ url_for('static', filename='map.html') }}" class="iFrame"></iframe>
+        </div>
+    {% endif %}
+</body>
+</html>
