@@ -7,5 +7,5 @@ normal = pd.read_csv(normal_file_path, encoding="CP949")
 print(normal)
 deleteAfterRow = normal[normal['영업상태명'] == '폐업'].index
 reslut = normal.drop(deleteAfterRow)
-reslut.to_csv('updateNormal.csv')
+reslut.to_csv('./CSV/updateNormal.csv', encoding="CP949")
 print(reslut)

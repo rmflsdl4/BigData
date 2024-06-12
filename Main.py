@@ -94,31 +94,40 @@ def createRoutine(stores, accommodation, bestStoreName):
 
     return routine
 
+def init():
+    # 초기화
+    bakeryFilePath = './CSV/bakery.csv'
+    recessFilePath = './CSV/recess.csv'
+    normalFilePath = './CSV/normal.csv'
+    accommodationFilePath = './CSV/accommodation.csv'
+    bestStoreNamePath = './CSV/bestStoreName.csv'
+
+    initColumns = ['소재지전체주소', '도로명전체주소', '도로명우편번호', '사업장명', '업태구분명', '좌표정보(x)', '좌표정보(y)']
+    columns = ['소재지전체주소', '도로명전체주소', '도로명우편번호', '사업장명', 'lon', 'lat']
+
+    bakery = pd.read_csv(bakeryFilePath, encoding="CP949", usecols=initColumns, dtype={'좌표정보(x)': float, '좌표정보(y)': float})
+    recess = pd.read_csv(recessFilePath, encoding="CP949", usecols=initColumns, dtype={'좌표정보(x)': float, '좌표정보(y)': float})
+    normal = pd.read_csv(normalFilePath, encoding="CP949", usecols=initColumns, dtype={'좌표정보(x)': float, '좌표정보(y)': float})
+    accommodation = pd.read_csv(accommodationFilePath, encoding="CP949", usecols=initColumns, dtype={'좌표정보(x)': float, '좌표정보(y)': float})
+    bestStoreName = pd.read_csv(bestStoreNamePath, usecols=['상호명'])
+
+    totalData = pd.concat([bakery, recess, normal])
+
+    totalData['lon'], totalData['lat'] = coordinateToFormat(totalData['좌표정보(x)'].values, totalData['좌표정보(y)'].values)
+    accommodation['lon'], accommodation['lat'] = coordinateToFormat(accommodation['좌표정보(x)'].values, accommodation['좌표정보(y)'].values)
+
+    return totalData, accommodation, bestStoreName
+
+totalData, accommodation, bestStoreName = init()
+
 @app.route('/', methods=['GET', 'POST'])
+
+
 def index():
     result = None
     if request.method == 'POST':
         inuptAddress = request.form['address']
 
-        bakeryFilePath = './CSV/bakery.csv'
-        recessFilePath = './CSV/recess.csv'
-        normalFilePath = './CSV/normal.csv'
-        accommodationFilePath = './CSV/accommodation.csv'
-        bestStoreNamePath = './CSV/bestStoreName.csv'
-
-        initColumns = ['소재지전체주소', '도로명전체주소', '도로명우편번호', '사업장명', '업태구분명', '좌표정보(x)', '좌표정보(y)']
-        columns = ['소재지전체주소', '도로명전체주소', '도로명우편번호', '사업장명', 'lon', 'lat']
-
-        bakery = pd.read_csv(bakeryFilePath, encoding="CP949", usecols=initColumns, dtype={'좌표정보(x)': float, '좌표정보(y)': float})
-        recess = pd.read_csv(recessFilePath, encoding="CP949", usecols=initColumns, dtype={'좌표정보(x)': float, '좌표정보(y)': float})
-        normal = pd.read_csv(normalFilePath, encoding="CP949", usecols=initColumns, dtype={'좌표정보(x)': float, '좌표정보(y)': float})
-        accommodation = pd.read_csv(accommodationFilePath, encoding="CP949", usecols=initColumns, dtype={'좌표정보(x)': float, '좌표정보(y)': float})
-        bestStoreName = pd.read_csv(bestStoreNamePath, usecols=['상호명'])
-
-        totalData = pd.concat([bakery, recess, normal])
-
-        totalData['lon'], totalData['lat'] = coordinateToFormat(totalData['좌표정보(x)'].values, totalData['좌표정보(y)'].values)
-        accommodation['lon'], accommodation['lat'] = coordinateToFormat(accommodation['좌표정보(x)'].values, accommodation['좌표정보(y)'].values)
 
         searchData = totalData.loc[
                         totalData['소재지전체주소'].str.contains(inuptAddress) |
