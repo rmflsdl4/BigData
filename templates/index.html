@@ -64,19 +64,20 @@
             font-weight: bold;
             font-size: 20px;
         }
-        .storeContainer1, .storeContainer2, .storeContainer3, .storeContainer4{
+        .storeContainer{
             display: flex;
             align-items: center;
             border-radius: 15px;
             padding: 15px;
+            cursor: pointer;
         }
-        .storeContainer1{
+        .storeContainer:nth-of-type(1){
             background-color: #98BCFF;
         }
-        .storeContainer2{
+        .storeContainer:nth-of-type(2), .storeContainer:nth-of-type(3), .storeContainer:nth-of-type(5){
             background-color: #C9D99A;
         }
-        .storeContainer3{
+        .storeContainer:nth-of-type(4){
             background-color: #BA7E3F;
         }
         .iFrameContainer{
@@ -102,23 +103,23 @@
     {% if result %}
         <div class="reslutCenter">
             <div class="resultContainer">
-                <div class="storeContainer1" onclick="window.location.href='https:\/\/www.google.com/search?q={query}'">
+                <div class="storeContainer" onclick="window.open(`https:\/\/www.google.com/search?q={{ result[0]['도로명전체주소'] }} {{ result[0]['사업장명'] }}`, '_blank')">
                     <img src="{{ url_for('static', filename='hotel.png') }}" class="storeImg">
                     <span class="storeSpan">{{ result[0]['사업장명'] }}</span>
                 </div>
-                <div class="storeContainer2"> 
+                <div class="storeContainer" onclick="window.open(`https:\/\/www.google.com/search?q={{ result[1]['도로명전체주소'] }} {{ result[1]['사업장명'] }}`, '_blank')"> 
                     <img src="{{ url_for('static', filename='restaurant.png') }}" class="storeImg">
                     <span class="storeSpan">{{ result[1]['사업장명'] }}</span>
                 </div>
-                <div class="storeContainer2">
+                <div class="storeContainer" onclick="window.open(`https:\/\/www.google.com/search?q={{ result[2]['도로명전체주소'] }} {{ result[2]['사업장명'] }}`, '_blank')">
                     <img src="{{ url_for('static', filename='restaurant.png') }}" class="storeImg">
                     <span class="storeSpan">{{ result[2]['사업장명'] }}</span>
                 </div>
-                <div class="storeContainer3">
+                <div class="storeContainer" onclick="window.open(`https:\/\/www.google.com/search?q={{ result[3]['도로명전체주소'] }} {{ result[3]['사업장명'] }}`, '_blank')">
                     <img src="{{ url_for('static', filename='cafeteria.png') }}" class="storeImg">
                     <span class="storeSpan">{{ result[3]['사업장명'] }}</span>
                 </div>
-                <div class="storeContainer2">
+                <div class="storeContainer" onclick="window.open(`https:\/\/www.google.com/search?q={{ result[4]['도로명전체주소'] }} {{ result[4]['사업장명'] }}`, '_blank')">
                     <img src="{{ url_for('static', filename='restaurant.png') }}" class="storeImg">
                     <span class="storeSpan">{{ result[4]['사업장명'] }}</span>
                 </div>

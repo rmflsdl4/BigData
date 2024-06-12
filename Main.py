@@ -17,7 +17,7 @@ def coordinateToFormat(x, y):
 
 def createMap(stores):
     lat, lon = stores[0]['lat'], stores[0]['lon']
-    map = folium.Map([lat, lon], zoom_start=14)
+    map = folium.Map([lat, lon], zoom_start=12)
     maxIdx = len(stores)
     for i in range(maxIdx):
         storeName = stores[i]['사업장명']
@@ -31,14 +31,14 @@ def createMap(stores):
                         <br>
                         <a href='https://www.google.com/search?q={query}' target='_blank'>세부 정보
                     </div>"""
-        if stores[i]['업태구분명'] == '기타' or stores[i]['업태구분명'] == '커피숍':
+        if stores[i]['업태구분명'] == '커피숍':
             iconColor = 'orange'
-            iconType = 'time'
+            iconType = 'star'
         elif i == 0:
             iconColor = 'lightblue'
             iconType = 'home'
         else:
-            iconColor = 'lightgreen'
+            iconColor = 'green'
             iconType = 'cutlery'
         marker = folium.Marker([stores[i]['lat'], stores[i]['lon']], popup=popup, icon=folium.Icon(color=iconColor, icon=iconType))
         marker.add_to(map)
@@ -62,8 +62,8 @@ def createRoutine(stores, accommodation, bestStoreName):
 
     filteredBreakfast = storesWithin5km[(storesWithin5km['업태구분명'] != '기타') & (storesWithin5km['업태구분명'] != '호프/통닭') & (storesWithin5km['업태구분명'] != '커피숍')]
     filteredLunch = storesWithin5km[(storesWithin5km['업태구분명'] != '기타') & (storesWithin5km['업태구분명'] != '호프/통닭') & (storesWithin5km['업태구분명'] != '커피숍')]
-    filteredEtc = storesWithin5km[(storesWithin5km['업태구분명'] == '기타') | (storesWithin5km['업태구분명'] == '커피숍')]
-    filteredDinner = storesWithin5km[storesWithin5km['업태구분명'] != '기타']
+    filteredEtc = storesWithin5km[storesWithin5km['업태구분명'] == '커피숍']
+    filteredDinner = storesWithin5km[(storesWithin5km['업태구분명'] != '기타') | (storesWithin5km['업태구분명'] == '커피숍')]
     breakfastBest = filteredBreakfast[filteredBreakfast['사업장명'].isin(bestStoreName['상호명'])] 
 
     if breakfastBest.empty:
@@ -106,8 +106,11 @@ def init():
     columns = ['소재지전체주소', '도로명전체주소', '도로명우편번호', '사업장명', 'lon', 'lat']
 
     bakery = pd.read_csv(bakeryFilePath, encoding="CP949", usecols=initColumns, dtype={'좌표정보(x)': float, '좌표정보(y)': float})
+    print("bakery 데이터 로드 완료")
     recess = pd.read_csv(recessFilePath, encoding="CP949", usecols=initColumns, dtype={'좌표정보(x)': float, '좌표정보(y)': float})
+    print("recess 데이터 로드 완료")
     normal = pd.read_csv(normalFilePath, encoding="CP949", usecols=initColumns, dtype={'좌표정보(x)': float, '좌표정보(y)': float})
+    print("normal 데이터 로드 완료")
     accommodation = pd.read_csv(accommodationFilePath, encoding="CP949", usecols=initColumns, dtype={'좌표정보(x)': float, '좌표정보(y)': float})
     bestStoreName = pd.read_csv(bestStoreNamePath, usecols=['상호명'])
 
@@ -115,7 +118,7 @@ def init():
 
     totalData['lon'], totalData['lat'] = coordinateToFormat(totalData['좌표정보(x)'].values, totalData['좌표정보(y)'].values)
     accommodation['lon'], accommodation['lat'] = coordinateToFormat(accommodation['좌표정보(x)'].values, accommodation['좌표정보(y)'].values)
-
+    print("모든 초기화 완료")
     return totalData, accommodation, bestStoreName
 
 totalData, accommodation, bestStoreName = init()
