@@ -14,31 +14,46 @@
             justify-content: center;
             flex-direction: row;
             width: 100%;
+            margin-top: 50px;
         }
+
         .searchBorder {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 30px;
             width: 80%;
-            border: 1px solid gray;
-            height: 45px;
+            border: 2px solid #98BCFF;
+            border-radius: 25px;
+            height: 50px;
+            background-color: #F0F7FF;
         }
+
         .searchInput {
             width: 80%;
             padding: 15px;
-            border-right: none;
             border: none;
             outline: none;
+            background-color: transparent;
+            font-size: 16px;
+            margin: 0 20px;
+            color: #70a2fd;
+            font-weight: bold;
         }
-        .searchBtn{
+
+        .searchBtn {
             width: 20%;
-            height: 45px;
+            height: 100%;
             border: none;
-        }
-        .searchBtn:hover{
-            opacity: 0.5;
+            background-color: #98BCFF;
+            border-radius: 23px;
+            color: white;
+            font-weight: bold;
             cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .searchBtn:hover {
+            background-color: #70a2fd;
         }
         .reslutCenter{
             display: flex;
@@ -80,6 +95,9 @@
         .storeContainer:nth-of-type(4){
             background-color: #BA7E3F;
         }
+        .storeContainer:nth-of-type(6){
+            background-color: #242424;
+        }
         .iFrameContainer{
             display: flex;
             align-items: center;
@@ -95,7 +113,7 @@
 <body>
     <div class="searchContainer">
         <form method="post" class="searchBorder">
-            <input type="text" class="searchInput" name="address" placeholder="원하는 지역명을 입력하세요.   예시) 사상구" required>
+            <input type="text" class="searchInput" name="address" placeholder="원하는 지역명을 입력하세요.   예시) 광주광역시" required>
             <button type="submit" class="searchBtn">생성하기</button>
         </form>
     </div>
@@ -123,6 +141,12 @@
                     <img src="{{ url_for('static', filename='restaurant.png') }}" class="storeImg">
                     <span class="storeSpan">{{ result[4]['사업장명'] }}</span>
                 </div>
+                {% if lenCultures %}
+                    <div class="storeContainer">
+                        <img src="{{ url_for('static', filename='culture.png') }}" class="storeImg">
+                        <span class="storeSpan">{{ lenCultures }}</span>
+                    </div>
+                {% endif %}
             </div>
         </div>
         <div class="iFrameContainer">
