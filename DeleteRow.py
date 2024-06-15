@@ -1,11 +1,11 @@
 import pandas as pd
 
-normal_file_path='./CSV/normal.csv'
+accommodationFilePath = './CSV/accommodation2.csv'
 
 # 음식점 데이터 로드
-normal = pd.read_csv(normal_file_path, encoding="CP949")
-print(normal)
-deleteAfterRow = normal[normal['영업상태명'] == '폐업'].index
-reslut = normal.drop(deleteAfterRow)
-reslut.to_csv('./CSV/updateNormal.csv', encoding="CP949")
-print(reslut)
+data = pd.read_csv(accommodationFilePath, encoding="CP949", dtype={'좌표정보(x)': float, '좌표정보(y)': float})
+print(len(data))
+deleteAfterRow = data[data['좌표정보(x)'] == ''].index
+reslut = data.drop(deleteAfterRow)
+reslut.to_csv('./CSV/updateData.csv', encoding="CP949")
+print(len(reslut))

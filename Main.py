@@ -126,6 +126,7 @@ def init():
     recessFilePath = './CSV/recess.csv'
     normalFilePath = './CSV/normal.csv'
     accommodationFilePath = './CSV/accommodation.csv'
+    accommodation2FilePath = './CSV/accommodation2.csv'
     bestStoreNamePath = './CSV/bestStoreName.csv'
     cultureFilePath = './CSV/culture.CSV'
 
@@ -141,16 +142,21 @@ def init():
     culture = pd.read_csv(cultureFilePath, encoding="CP949", dtype={'위도': float, '경도': float})
     print("culture 데이터 로드 완료")
     accommodation = pd.read_csv(accommodationFilePath, encoding="CP949", usecols=initColumns, dtype={'좌표정보(x)': float, '좌표정보(y)': float})
+    print("accommodation 데이터 로드 완료")
+    accommodation2 = pd.read_csv(accommodation2FilePath, encoding="CP949", usecols=initColumns, dtype={'좌표정보(x)': float, '좌표정보(y)': float})
+    print("accommodation2 데이터 로드 완료")
+
     bestStoreName = pd.read_csv(bestStoreNamePath, usecols=['상호명'])
 
     totalData = pd.concat([bakery, recess, normal])
+    accommodationData = pd.concat([accommodation, accommodation2])
 
     totalData['lon'], totalData['lat'] = coordinateToFormat(totalData['좌표정보(x)'].values, totalData['좌표정보(y)'].values)
-    accommodation['lon'], accommodation['lat'] = coordinateToFormat(accommodation['좌표정보(x)'].values, accommodation['좌표정보(y)'].values)
+    accommodationData['lon'], accommodationData['lat'] = coordinateToFormat(accommodationData['좌표정보(x)'].values, accommodationData['좌표정보(y)'].values)
     print("모든 초기화 완료")
-    return totalData, accommodation, bestStoreName, culture
+    return totalData, accommodationData, bestStoreName, culture
 
-totalData, accommodation, bestStoreName, cultureData = init()
+totalData, accommodationData, bestStoreName, cultureData = init()
 
 @app.route('/', methods=['GET', 'POST'])
 
@@ -167,9 +173,9 @@ def index():
                         totalData['도로명전체주소'].str.contains(inuptAddress) |
                         totalData['사업장명'].str.contains(inuptAddress)
                     ] 
-        filterAccommodation = accommodation.loc[
-                        accommodation['소재지전체주소'].str.contains(inuptAddress) |
-                        accommodation['도로명전체주소'].str.contains(inuptAddress) 
+        filterAccommodation = accommodationData.loc[
+                        accommodationData['소재지전체주소'].str.contains(inuptAddress) |
+                        accommodationData['도로명전체주소'].str.contains(inuptAddress) 
                     ] 
         stores = searchData[['도로명전체주소','사업장명', 'lon', 'lat', '업태구분명', '소재지전체주소']]
 
