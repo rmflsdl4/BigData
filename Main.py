@@ -18,7 +18,7 @@ def coordinateToFormat(x, y):
 def createMap(stores, nearbyCultures):
 
     lat, lon = stores[0]['lat'], stores[0]['lon']
-    map = folium.Map([lat, lon], zoom_start=13)
+    map = folium.Map([lat, lon], zoom_start=15)
     maxIdx = len(stores)
     # 루틴 추가
     for i in range(maxIdx):
@@ -66,7 +66,7 @@ def createMap(stores, nearbyCultures):
     
     map.save('static/map.html')
 
-def createRoutine(stores, accommodation, bestStoreName, cultures):
+def createRoutine(accommodation, bestStoreName, cultures):
     def storeWithin5km(store):
         location = (store['lat'], store['lon']) 
         return geodesic(accommodationLocation, location).km <= 5
@@ -79,6 +79,16 @@ def createRoutine(stores, accommodation, bestStoreName, cultures):
     routine = []
 
     routine.append(accommodation.iloc[random.randint(0, len(accommodation)-1)])
+
+    cityName = routine[0]['도로명전체주소'].split()[1]
+
+    searchData = totalData.loc[
+                        totalData['소재지전체주소'].str.contains(cityName) |
+                        totalData['도로명전체주소'].str.contains(cityName) |
+                        totalData['사업장명'].str.contains(cityName)
+                    ] 
+
+    stores = searchData[['도로명전체주소','사업장명', 'lon', 'lat', '업태구분명', '소재지전체주소']]
 
     accommodationLocation = (routine[0]['lat'], routine[0]['lon'])
     accommodation = accommodation.dropna(subset = ['lat', 'lon'])
@@ -167,19 +177,14 @@ def index():
     if request.method == 'POST':
         inuptAddress = request.form['address']
 
-
-        searchData = totalData.loc[
-                        totalData['소재지전체주소'].str.contains(inuptAddress) |
-                        totalData['도로명전체주소'].str.contains(inuptAddress) |
-                        totalData['사업장명'].str.contains(inuptAddress)
-                    ] 
         filterAccommodation = accommodationData.loc[
                         accommodationData['소재지전체주소'].str.contains(inuptAddress) |
                         accommodationData['도로명전체주소'].str.contains(inuptAddress) 
                     ] 
-        stores = searchData[['도로명전체주소','사업장명', 'lon', 'lat', '업태구분명', '소재지전체주소']]
+        if filterAccommodation.empty:
+            return render_template('index.html', result=[])
 
-        routine, nearbyCultures = createRoutine(stores, filterAccommodation, bestStoreName, cultureData)
+        routine, nearbyCultures = createRoutine(filterAccommodation, bestStoreName, cultureData)
 
         createMap(routine, nearbyCultures)
 
